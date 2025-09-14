@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import { busQueue, buses, busRoutes, busStops } from '../data/mockData';
+import PropTypes from 'prop-types';
+import { busQueue, buses, busRoutes } from '../data/mockData';
+import { t } from '../utils/i18n';
 
 const BusQueue = ({ routeId, onBusSelect }) => {
   const [selectedRoute, setSelectedRoute] = useState(routeId || '');
@@ -34,7 +36,7 @@ const BusQueue = ({ routeId, onBusSelect }) => {
 
   return (
     <div className="bg-white p-6 rounded-lg shadow-lg">
-      <h2 className="text-2xl font-bold mb-6 text-gray-800">Bus Queue & Schedule</h2>
+      <h2 className="text-2xl font-bold mb-6 text-gray-800">{t('bus_queue.title')}</h2>
       
       <div className="mb-6">
         <label className="block text-sm font-medium text-gray-700 mb-2">Select Route</label>
@@ -161,6 +163,11 @@ const BusQueue = ({ routeId, onBusSelect }) => {
       )}
     </div>
   );
+};
+
+BusQueue.propTypes = {
+  routeId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  onBusSelect: PropTypes.func
 };
 
 export default BusQueue;

@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import { buses, busRoutes, busStops, busQueue } from '../data/mockData';
+import PropTypes from 'prop-types';
+import { buses, busRoutes, busQueue } from '../data/mockData';
+import { t } from '../utils/i18n';
 
 const BusSearch = ({ onBusSelect }) => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -26,7 +28,6 @@ const BusSearch = ({ onBusSelect }) => {
     const enrichedResults = results.map(bus => {
       const route = busRoutes.find(r => r.id === bus.routeId);
       const queue = busQueue[bus.routeId] || [];
-      const busInQueue = queue.find(q => q.busId === bus.id);
       
       return {
         ...bus,
@@ -56,7 +57,7 @@ const BusSearch = ({ onBusSelect }) => {
 
   return (
     <div className="bg-white p-6 rounded-lg shadow-lg">
-      <h2 className="text-2xl font-bold mb-6 text-gray-800">Find Your Bus</h2>
+      <h2 className="text-2xl font-bold mb-6 text-gray-800">{t('bus_search.title')}</h2>
       
       <div className="grid md:grid-cols-2 gap-4 mb-6">
         <div>
@@ -95,7 +96,7 @@ const BusSearch = ({ onBusSelect }) => {
       {searchResults.length > 0 && (
         <div className="space-y-4">
           <h3 className="text-lg font-semibold text-gray-800">
-            Found {searchResults.length} bus(es)
+            {t('bus_search.found_buses', { count: searchResults.length })}
           </h3>
           
           {searchResults.map(bus => (
@@ -180,6 +181,10 @@ const BusSearch = ({ onBusSelect }) => {
       )}
     </div>
   );
+};
+
+BusSearch.propTypes = {
+  onBusSelect: PropTypes.func
 };
 
 export default BusSearch;

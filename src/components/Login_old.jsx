@@ -10,6 +10,10 @@ const Login = ({ role }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!role || !roleInfo[role]) {
+      setError('Invalid role specified');
+      return;
+    }
     const success = login({ ...credentials, role });
     
     if (success) {

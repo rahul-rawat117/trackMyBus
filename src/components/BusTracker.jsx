@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import PropTypes from 'prop-types';
 import { MapContainer, TileLayer, Marker, Popup, Polyline, Circle } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
+import { t } from '../utils/i18n';
 
 // Fix for default markers
 delete L.Icon.Default.prototype._getIconUrl;
@@ -39,11 +41,18 @@ const stopIcon = new L.Icon({
 const BusTracker = ({ selectedBus, route, stops, onBusSelect }) => {
   const [busPosition, setBusPosition] = useState(selectedBus ? { lat: selectedBus.lat, lng: selectedBus.lng } : null);
   const [routePath, setRoutePath] = useState([]);
+  const intervalRef = useRef(null);
 
   useEffect(() => {
+    // Clear any existing interval
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+      intervalRef.current = null;
+    }
+
     if (selectedBus && route) {
       // Simulate real-time bus movement
-      const interval = setInterval(() => {
+      intervalRef.current = setInterval(() => {
         setBusPosition(prev => {
           if (!prev) return { lat: selectedBus.lat, lng: selectedBus.lng };
           
@@ -63,15 +72,20 @@ const BusTracker = ({ selectedBus, route, stops, onBusSelect }) => {
         }).filter(Boolean);
         setRoutePath(path);
       }
-
-      return () => clearInterval(interval);
     }
+
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+        intervalRef.current = null;
+      }
+    };
   }, [selectedBus, route, stops]);
 
   if (!selectedBus || !busPosition) {
     return (
       <div className="h-96 bg-gray-100 rounded-lg flex items-center justify-center">
-        <p className="text-gray-500">Select a bus to view live tracking</p>
+        <p className="text-gray-500">{t('bus_tracker.select_bus')}</p>
       </div>
     );
   }
@@ -138,6 +152,13 @@ const BusTracker = ({ selectedBus, route, stops, onBusSelect }) => {
       </MapContainer>
     </div>
   );
+};
+
+BusTracker.propTypes = {
+  selectedBus: PropTypes.object,
+  route: PropTypes.object,
+  stops: PropTypes.array,
+  onBusSelect: PropTypes.func
 };
 
 export default BusTracker;

@@ -1,3 +1,5 @@
+import { t } from '../utils/i18n';
+
 const Contact = () => {
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900 overflow-hidden transition-colors duration-500 pt-20">
@@ -5,7 +7,7 @@ const Contact = () => {
         <div className="text-center mb-8">
           <span className="material-icons text-6xl text-blue-600 mb-4 block">phone</span>
           <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-4">
-            Contact Us
+            {t('contact.title')}
           </h1>
           <p className="text-xl text-gray-600">Get in touch with our team</p>
         </div>
@@ -41,7 +43,7 @@ const Contact = () => {
           </div>
 
           <div className="bg-white/80 backdrop-blur-xl rounded-xl p-6 shadow-xl border border-white/20">
-            <h3 className="text-xl font-bold mb-4">Send us a Message</h3>
+            <h3 className="text-xl font-bold mb-4">{t('contact.send_message')}</h3>
             <form className="space-y-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Name</label>

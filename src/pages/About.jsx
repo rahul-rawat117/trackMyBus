@@ -1,3 +1,5 @@
+import { t } from '../utils/i18n';
+
 const About = () => {
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900 overflow-hidden transition-colors duration-500 pt-20">
@@ -5,7 +7,7 @@ const About = () => {
         <div className="text-center mb-8">
           <span className="material-icons text-6xl text-blue-600 mb-4 block">info</span>
           <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-4">
-            About TrackMyBus
+            {t('about.title')}
           </h1>
           <p className="text-xl text-gray-600">Real-time bus tracking made simple</p>
         </div>
@@ -37,7 +39,7 @@ const About = () => {
         </div>
 
         <div className="bg-white/80 backdrop-blur-xl rounded-xl p-8 shadow-xl border border-white/20 text-center">
-          <h2 className="text-2xl font-bold mb-4">Our Mission</h2>
+          <h2 className="text-2xl font-bold mb-4">{t('about.our_mission')}</h2>
           <p className="text-gray-600 text-lg leading-relaxed">
             To revolutionize public transportation by providing real-time tracking and smart features 
             that make commuting more efficient, reliable, and stress-free for everyone.

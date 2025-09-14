@@ -4,6 +4,7 @@ import BusSearch from '../components/BusSearch';
 import BusTracker from '../components/BusTracker';
 import BusQueue from '../components/BusQueue';
 import { busRoutes, buses, busStops } from '../data/mockData';
+import { t } from '../utils/i18n';
 
 const Commuter = () => {
   const [activeTab, setActiveTab] = useState('route-search');
@@ -43,7 +44,7 @@ const Commuter = () => {
         {/* Header */}
         <div className="mb-4 text-center animate-slide-in-up">
           <div className="text-3xl mb-2 animate-bounce-in"><span className="material-icons text-3xl text-blue-600">directions_bus</span></div>
-          <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent mb-1">Bus Tracker</h1>
+          <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent mb-1">{t('commuter.title')}</h1>
           <p className="text-sm text-gray-600">Track your bus in real-time, just like food delivery!</p>
         </div>
 

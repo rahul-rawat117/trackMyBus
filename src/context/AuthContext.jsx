@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState } from 'react';
+import PropTypes from 'prop-types';
 
 const AuthContext = createContext();
 
@@ -18,8 +19,8 @@ export const AuthProvider = ({ children }) => {
     
     // Mock authentication - replace with real API
     const validCredentials = {
-      driver: { username: 'driver123', password: 'driver123' },
-      admin: { username: 'admin123', password: 'admin123' }
+      driver: { username: process.env.REACT_APP_DRIVER_USERNAME || 'driver123', password: process.env.REACT_APP_DRIVER_PASSWORD || 'driver123' },
+      admin: { username: process.env.REACT_APP_ADMIN_USERNAME || 'admin123', password: process.env.REACT_APP_ADMIN_PASSWORD || 'admin123' }
     };
 
     if (validCredentials[role] && 
@@ -51,4 +52,8 @@ export const AuthProvider = ({ children }) => {
       {children}
     </AuthContext.Provider>
   );
+};
+
+AuthProvider.propTypes = {
+  children: PropTypes.node.isRequired
 };

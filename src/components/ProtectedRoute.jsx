@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { useAuth } from '../context/AuthContext';
 import { Navigate } from 'react-router-dom';
 
@@ -13,6 +14,11 @@ const ProtectedRoute = ({ children, requiredRole }) => {
   }
 
   return children;
+};
+
+ProtectedRoute.propTypes = {
+  children: PropTypes.node.isRequired,
+  requiredRole: PropTypes.string.isRequired
 };
 
 export default ProtectedRoute;

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { useTheme } from '../context/ThemeContext';
 
 const Logo = ({ size = "md", className = "" }) => {
@@ -21,6 +22,11 @@ const Logo = ({ size = "md", className = "" }) => {
       style={{ filter: colorFilter }}
     />
   );
+};
+
+Logo.propTypes = {
+  size: PropTypes.oneOf(['sm', 'md', 'lg', 'xl', '2xl']),
+  className: PropTypes.string
 };
 
 export default Logo;

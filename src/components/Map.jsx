@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import L from 'leaflet';
 
@@ -34,6 +35,11 @@ const Map = ({ buses, height = "400px" }) => {
       </MapContainer>
     </div>
   );
+};
+
+Map.propTypes = {
+  buses: PropTypes.arrayOf(PropTypes.object).isRequired,
+  height: PropTypes.string
 };
 
 export default Map;

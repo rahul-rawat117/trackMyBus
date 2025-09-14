@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import PropTypes from 'prop-types';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
@@ -7,17 +8,6 @@ const Login = ({ role }) => {
   const [error, setError] = useState('');
   const { login } = useAuth();
   const navigate = useNavigate();
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const success = login({ ...credentials, role });
-    
-    if (success) {
-      navigate(`/${role}`);
-    } else {
-      setError('Invalid credentials');
-    }
-  };
 
   const roleInfo = {
     driver: {
@@ -31,6 +21,31 @@ const Login = ({ role }) => {
       icon: 'admin_panel_settings',
       subtitle: 'Access administrative panel',
       demoCredentials: 'Username: admin123, Password: admin123'
+    }
+  };
+
+  if (!role || !roleInfo[role]) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold text-red-600 mb-4">Invalid Role</h1>
+          <p className="text-gray-600 mb-4">The specified role is not valid.</p>
+          <button onClick={() => navigate('/')} className="btn-primary px-4 py-2 rounded-lg">
+            Go Home
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const success = login({ ...credentials, role });
+    
+    if (success) {
+      navigate(`/${role}`);
+    } else {
+      setError('Invalid credentials');
     }
   };
 
@@ -113,6 +128,10 @@ const Login = ({ role }) => {
       </div>
     </div>
   );
+};
+
+Login.propTypes = {
+  role: PropTypes.oneOf(['driver', 'admin']).isRequired
 };
 
 export default Login;

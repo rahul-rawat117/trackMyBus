@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import Map from '../components/Map';
 import { buses, analytics } from '../data/mockData';
+import { t } from '../utils/i18n';
 
 const Admin = () => {
   const [viewMode, setViewMode] = useState('table');
@@ -8,7 +9,12 @@ const Admin = () => {
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900 overflow-hidden transition-colors duration-500">
       <div className="max-w-7xl mx-auto px-4 py-8 pt-20">
-        <h1 className="text-3xl font-bold mb-8">Admin Dashboard</h1>
+        {/* Header */}
+        <div className="mb-8 text-center animate-slide-in-up">
+          <div className="text-3xl mb-2 animate-bounce-in"><span className="material-icons text-3xl text-purple-600">admin_panel_settings</span></div>
+          <h1 className="text-2xl font-bold bg-gradient-to-r from-purple-600 via-indigo-600 to-blue-600 bg-clip-text text-transparent mb-1">{t('admin.title')}</h1>
+          <p className="text-sm text-gray-600 dark:text-gray-400">Monitor and manage the entire fleet system</p>
+        </div>
       
       {/* Analytics Cards */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
@@ -83,7 +89,7 @@ const Admin = () => {
       {viewMode === 'table' ? (
         <div className="bg-white rounded-lg shadow overflow-hidden">
           <div className="px-6 py-4 border-b">
-            <h2 className="text-xl font-semibold">Fleet Status</h2>
+            <h2 className="text-xl font-semibold">{t('admin.fleet_status')}</h2>
           </div>
           <div className="overflow-x-auto">
             <table className="w-full">
@@ -124,7 +130,7 @@ const Admin = () => {
         </div>
       ) : (
         <div className="bg-white p-6 rounded-lg shadow">
-          <h2 className="text-xl font-semibold mb-4">Live Fleet Map</h2>
+          <h2 className="text-xl font-semibold mb-4">{t('admin.live_fleet_map')}</h2>
           <Map buses={buses} height="600px" />
         </div>
       )}

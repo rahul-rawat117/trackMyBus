@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { t } from '../utils/i18n';
 
 const Driver = () => {
   const [tripActive, setTripActive] = useState(false);
@@ -25,11 +26,16 @@ const Driver = () => {
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900 overflow-hidden transition-colors duration-500">
       <div className="max-w-4xl mx-auto px-4 py-8 pt-20">
-        <h1 className="text-3xl font-bold mb-8">Driver Interface</h1>
+        {/* Header */}
+        <div className="mb-8 text-center animate-slide-in-up">
+          <div className="text-3xl mb-2 animate-bounce-in"><span className="material-icons text-3xl text-green-600">local_shipping</span></div>
+          <h1 className="text-2xl font-bold bg-gradient-to-r from-green-600 via-blue-600 to-indigo-600 bg-clip-text text-transparent mb-1">{t('driver.title')}</h1>
+          <p className="text-sm text-gray-600 dark:text-gray-400">Manage your trips and share location with passengers</p>
+        </div>
       
       <div className="grid md:grid-cols-2 gap-8">
         <div className="bg-white p-4 rounded-lg shadow">
-          <h2 className="text-lg font-semibold mb-4">Trip Control</h2>
+          <h2 className="text-lg font-semibold mb-4">{t('driver.trip_control')}</h2>
           
           <div className="space-y-4">
             <div className="text-center">
@@ -71,7 +77,7 @@ const Driver = () => {
         </div>
 
         <div className="bg-white p-4 rounded-lg shadow">
-          <h2 className="text-lg font-semibold mb-4">Current Status</h2>
+          <h2 className="text-lg font-semibold mb-4">{t('driver.current_status')}</h2>
           
           <div className="space-y-3">
             <div className="flex justify-between">
@@ -108,7 +114,7 @@ const Driver = () => {
       </div>
 
       <div className="mt-6 bg-white p-4 rounded-lg shadow">
-        <h2 className="text-lg font-semibold mb-3">Trip History</h2>
+        <h2 className="text-lg font-semibold mb-3">{t('driver.trip_history')}</h2>
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>

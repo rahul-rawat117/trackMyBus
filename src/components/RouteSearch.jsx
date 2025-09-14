@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { busRoutes, busStops } from '../data/mockData';
+import { t } from '../utils/i18n';
 
 const RouteSearch = ({ onRouteSelect }) => {
   const [fromStop, setFromStop] = useState('');
@@ -9,22 +11,24 @@ const RouteSearch = ({ onRouteSelect }) => {
   const handleSearch = () => {
     if (!fromStop || !toStop) return;
 
-    const fromStopObj = busStops.find(stop => stop.id === parseInt(fromStop));
-    const toStopObj = busStops.find(stop => stop.id === parseInt(toStop));
+    const fromStopId = parseInt(fromStop);
+    const toStopId = parseInt(toStop);
+    const fromStopObj = busStops.find(stop => stop.id === fromStopId);
+    const toStopObj = busStops.find(stop => stop.id === toStopId);
 
     if (!fromStopObj || !toStopObj) return;
 
     // Find routes that connect these stops
     const possibleRoutes = busRoutes.filter(route => {
-      const fromIndex = route.stops.indexOf(parseInt(fromStop));
-      const toIndex = route.stops.indexOf(parseInt(toStop));
+      const fromIndex = route.stops.indexOf(fromStopId);
+      const toIndex = route.stops.indexOf(toStopId);
       return fromIndex !== -1 && toIndex !== -1 && fromIndex < toIndex;
     });
 
     // Calculate estimated travel time and fare
     const results = possibleRoutes.map(route => {
-      const fromIndex = route.stops.indexOf(parseInt(fromStop));
-      const toIndex = route.stops.indexOf(parseInt(toStop));
+      const fromIndex = route.stops.indexOf(fromStopId);
+      const toIndex = route.stops.indexOf(toStopId);
       const stopsCount = toIndex - fromIndex;
       const estimatedTime = Math.round(stopsCount * 8 + Math.random() * 10); // 8 mins per stop + random
       const estimatedFare = Math.round(route.fare * (stopsCount / route.stops.length));
@@ -48,7 +52,7 @@ const RouteSearch = ({ onRouteSelect }) => {
 
   return (
     <div className="bg-white p-6 rounded-lg shadow-lg">
-      <h2 className="text-2xl font-bold mb-6 text-gray-800">Plan Your Journey</h2>
+      <h2 className="text-2xl font-bold mb-6 text-gray-800">{t('route_search.title')}</h2>
       
       <div className="grid md:grid-cols-2 gap-4 mb-6">
         <div>
@@ -90,7 +94,7 @@ const RouteSearch = ({ onRouteSelect }) => {
 
       {searchResults.length > 0 && (
         <div className="mt-8">
-          <h3 className="text-lg font-semibold mb-4 text-gray-800">Available Routes</h3>
+          <h3 className="text-lg font-semibold mb-4 text-gray-800">{t('route_search.available_routes')}</h3>
           <div className="space-y-4">
             {searchResults.map(route => (
               <div
@@ -148,6 +152,10 @@ const RouteSearch = ({ onRouteSelect }) => {
       )}
     </div>
   );
+};
+
+RouteSearch.propTypes = {
+  onRouteSelect: PropTypes.func
 };
 
 export default RouteSearch;
